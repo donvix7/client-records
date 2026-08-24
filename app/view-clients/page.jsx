@@ -68,6 +68,7 @@ const Page = () => {
       try {
         setLoading(true)
         const res = await getClients()
+        console.log(res)
         if(res.success){
           setClients(res.data.docs || [])
         }
@@ -445,7 +446,7 @@ const Page = () => {
       {/* Modal */}
       {isModalOpen && selectedClient && (
         <div className='fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn'>
-          <div className='bg-slate-500/10 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-slideUp'>
+          <div className='bg-slate-100 dark:bg-slate-900 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-slideUp'>
             {/* Modal Header */}
             <div className='flex items-center justify-between p-6 border-b border-gray-800'>
               <div className='flex items-center gap-3'>

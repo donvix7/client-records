@@ -1,26 +1,83 @@
+@import url("https://fonts.cdnfonts.com/css/sf-florencesans");
+@import url("https://db.onlinewebfonts.com/c/8e38c9cc931e43e959d8341ad03741ab?family=Unitext+Regular");
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme {
+  --color-base-500: #333;
+  --color-primary: #203645;
+  --color-primary-100: #E3ECF2;
+  --color-primary-200: #c7d9e5;
+  --color-primary-700: #477899;
+  --color-primary-900: #2d4c61;
+  --color-secondary: #c2a269;
+  --color-secondary-100: #F5F0E7;
+  --color-secondary-500: #cdb385;
+  --color-neutrals: #dadada;
+  --color-black: #333;
+  --color-neutrals-900: #585858;
+  --color-error: #F44336;
+  --font-sans: "SF Florencesans Exp", sans-serif;
+  --font-mono: "Unitext Regular", sans-serif;
+  --text-md: 1.125rem;
+  --text-s: 0.875rem;
+  --animate-scroll: scroll 30s ease-in-out infinite;
+  --animate-bg: bg 2s ease-in infinite;
+  @keyframes scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes bg {
+    0% {
+      background-color: #f9f9f9db;
+    }
+    50% {
+      background-color: #dadadada;
+    }
+    100% {
+      background-color: #dadada9c;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.spinner {
+  margin: 3.2rem auto 1.6rem;
+  width: 60px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid theme("colors.primary.900");
+  border-right-color: theme("colors.primary.200");
+  animation: rotate 1s infinite linear;
+}
+
+.spinner-mini {
+  margin: 0;
+  width: 20px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid theme("colors.white");
+  border-right-color: transparent;
+  animation: rotate 1s infinite linear;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(1turn);
+  }
 }

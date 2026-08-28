@@ -2,13 +2,7 @@
 
 import React, { useRef } from "react";
 import { 
-  User, 
-  Mail, 
-  Phone, 
-  Building2, 
-  Briefcase, 
   Save, 
-  X,
   Shield,
   CheckCircle,
   Info,
@@ -110,8 +104,12 @@ const AddContact = () => {
     }
   }
 
+  const inputClass = (hasError) => `w-full rounded-lg border bg-[#FCFEFF] px-4.5 py-3 focus:outline-none ${
+    hasError ? 'border-error' : 'border-primary-200'
+  }`
+
   return (
-    <div className="min-h-screen w-full bg-white text-slate-900 antialiased flex flex-col">
+    <div className="min-h-screen w-full bg-white text-primary antialiased flex flex-col">
       <Navigation/>
 
       {/* Notification */}
@@ -125,14 +123,14 @@ const AddContact = () => {
             {notification.type === 'success' ? (
               <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
             ) : (
-              <X className="w-5 h-5 text-red-600 flex-shrink-0" />
+              <span className="text-red-600 flex-shrink-0 font-bold">✕</span>
             )}
             <span className="flex-1">{notification.message}</span>
             <button 
               onClick={dismissNotification}
               className="p-1 hover:bg-black/5 rounded-lg transition-colors flex-shrink-0"
             >
-              <X className="w-4 h-4" />
+              <span className="text-gray-500">✕</span>
             </button>
           </div>
         </div>
@@ -140,16 +138,16 @@ const AddContact = () => {
 
       {/* Header */}
       <div className="w-full max-w-2xl mx-auto px-4 sm:px-6 pt-8 pb-4">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-blue-700 transition-colors mb-4">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm text-neutrals-900 hover:text-primary transition-colors mb-4">
           <ArrowLeft className="w-4 h-4" />
           Back to Home
         </Link>
         
         <div className="flex flex-col gap-2">
-          <h1 className="text-3xl sm:text-4xl font-light text-slate-900">
+          <h1 className="text-3xl sm:text-4xl font-bold text-primary font-sans">
             Add Your Details
           </h1>
-          <p className="text-lg text-gray-600 font-light">
+          <p className="text-lg text-neutrals-900 font-mono">
             Register to receive invitations for future company events and updates
           </p>
         </div>
@@ -157,60 +155,54 @@ const AddContact = () => {
       
       <main className='w-full max-w-2xl mx-auto px-4 sm:px-6 pb-12'>
         {/* Trust Banner */}
-        <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6 flex items-start gap-3">
-          <Shield className="w-5 h-5 text-blue-700 flex-shrink-0 mt-0.5" />
+        <div className="bg-primary-100 border border-primary-200 rounded-xl p-4 mb-6 flex items-start gap-3">
+          <Shield className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm text-blue-900 font-medium">Your data is secure</p>
-            <p className="text-sm text-blue-700/80 font-light">
+            <p className="text-sm text-primary font-medium font-sans">Your data is secure</p>
+            <p className="text-sm text-primary-700 font-mono">
               Your information will be stored securely and used exclusively for company communications and event invitations.
             </p>
           </div>
         </div>
 
-        <div className="bg-gray-50/50 border border-gray-200 rounded-2xl p-6 sm:p-8">
+        <div className="bg-white border border-primary-200 rounded-xl p-6 sm:p-8">
           <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-6">
             {/* Personal Info */}
             <div className="flex flex-col gap-4">
-              <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider border-b border-gray-200 pb-3">
+              <h2 className="text-sm font-semibold text-neutrals-900 uppercase tracking-wider border-b border-primary-200 pb-3 font-sans">
                 Personal Information
               </h2>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="firstName" className="text-xs font-medium text-gray-700">
-                    First Name <span className="text-red-500">*</span>
+                <div className="w-full flex flex-col space-y-2 font-mono">
+                  <label htmlFor="firstName" className="text-sm text-black">
+                    First Name <span className="text-error">*</span>
                   </label>
-                  <div className="relative">
-                    <input 
-                      className={`w-full pl-10 pr-4 py-2.5 rounded-lg border ${formErrors.firstName ? 'border-red-400 bg-red-50' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm`} 
-                      type="text" 
-                      name="firstName" 
-                      id="firstName"
-                      placeholder="Enter first name"
-                    />
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  </div>
+                  <input
+                    className={inputClass(formErrors.firstName)}
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    placeholder="Enter first name"
+                  />
                   {formErrors.firstName && (
-                    <p className="text-xs text-red-500 mt-1">{formErrors.firstName}</p>
+                    <span className="-mt-2 text-xs text-error">{formErrors.firstName}</span>
                   )}
                 </div>
 
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="lastName" className="text-xs font-medium text-gray-700">
-                    Last Name <span className="text-red-500">*</span>
+                <div className="w-full flex flex-col space-y-2 font-mono">
+                  <label htmlFor="lastName" className="text-sm text-black">
+                    Last Name <span className="text-error">*</span>
                   </label>
-                  <div className="relative">
-                    <input 
-                      className={`w-full pl-10 pr-4 py-2.5 rounded-lg border ${formErrors.lastName ? 'border-red-400 bg-red-50' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm`} 
-                      type="text" 
-                      name="lastName" 
-                      id="lastName"
-                      placeholder="Enter last name"
-                    />
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  </div>
+                  <input
+                    className={inputClass(formErrors.lastName)}
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    placeholder="Enter last name"
+                  />
                   {formErrors.lastName && (
-                    <p className="text-xs text-red-500 mt-1">{formErrors.lastName}</p>
+                    <span className="-mt-2 text-xs text-error">{formErrors.lastName}</span>
                   )}
                 </div>
               </div>
@@ -218,46 +210,40 @@ const AddContact = () => {
 
             {/* Contact Info */}
             <div className="flex flex-col gap-4">
-              <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider border-b border-gray-200 pb-3">
+              <h2 className="text-sm font-semibold text-neutrals-900 uppercase tracking-wider border-b border-primary-200 pb-3 font-sans">
                 Contact Information
               </h2>
               
               <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="email" className="text-xs font-medium text-gray-700">
-                    Email Address <span className="text-red-500">*</span>
+                <div className="w-full flex flex-col space-y-2 font-mono">
+                  <label htmlFor="email" className="text-sm text-black">
+                    Email Address <span className="text-error">*</span>
                   </label>
-                  <div className="relative">
-                    <input 
-                      className={`w-full pl-10 pr-4 py-2.5 rounded-lg border ${formErrors.email ? 'border-red-400 bg-red-50' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm`} 
-                      type="email" 
-                      name="email" 
-                      id="email"
-                      placeholder="Enter email address"
-                    />
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  </div>
+                  <input
+                    className={inputClass(formErrors.email)}
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Enter email address"
+                  />
                   {formErrors.email && (
-                    <p className="text-xs text-red-500 mt-1">{formErrors.email}</p>
+                    <span className="-mt-2 text-xs text-error">{formErrors.email}</span>
                   )}
                 </div>
 
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="phone" className="text-xs font-medium text-gray-700">
-                    Phone Number <span className="text-red-500">*</span>
+                <div className="w-full flex flex-col space-y-2 font-mono">
+                  <label htmlFor="phone" className="text-sm text-black">
+                    Phone Number <span className="text-error">*</span>
                   </label>
-                  <div className="relative">
-                    <input 
-                      className={`w-full pl-10 pr-4 py-2.5 rounded-lg border ${formErrors.phone ? 'border-red-400 bg-red-50' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm`} 
-                      type="text" 
-                      name="phone" 
-                      id="phone"
-                      placeholder="Enter phone number"
-                    />
-                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  </div>
+                  <input
+                    className={inputClass(formErrors.phone)}
+                    type="text"
+                    name="phone"
+                    id="phone"
+                    placeholder="Enter phone number"
+                  />
                   {formErrors.phone && (
-                    <p className="text-xs text-red-500 mt-1">{formErrors.phone}</p>
+                    <span className="-mt-2 text-xs text-error">{formErrors.phone}</span>
                   )}
                 </div>
               </div>
@@ -265,67 +251,61 @@ const AddContact = () => {
 
             {/* Company Info */}
             <div className="flex flex-col gap-4">
-              <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider border-b border-gray-200 pb-3">
-                Professional Information <span className="text-gray-400 font-normal lowercase">(optional)</span>
+              <h2 className="text-sm font-semibold text-neutrals-900 uppercase tracking-wider border-b border-primary-200 pb-3 font-sans">
+                Professional Information <span className="text-neutrals-900 font-normal lowercase">(optional)</span>
               </h2>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="company" className="text-xs font-medium text-gray-700">
+                <div className="w-full flex flex-col space-y-2 font-mono">
+                  <label htmlFor="company" className="text-sm text-black">
                     Company Name
                   </label>
-                  <div className="relative">
-                    <input 
-                      className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm" 
-                      type="text" 
-                      name="company" 
-                      id="company"
-                      placeholder="Enter company name"
-                    />
-                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  </div>
+                  <input
+                    className={inputClass(false)}
+                    type="text"
+                    name="company"
+                    id="company"
+                    placeholder="Enter company name"
+                  />
                 </div>
 
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="jobTitle" className="text-xs font-medium text-gray-700">
+                <div className="w-full flex flex-col space-y-2 font-mono">
+                  <label htmlFor="jobTitle" className="text-sm text-black">
                     Job Title
                   </label>
-                  <div className="relative">
-                    <input 
-                      className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm" 
-                      type="text" 
-                      name="jobTitle" 
-                      id="jobTitle"
-                      placeholder="Enter job title"
-                    />
-                    <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  </div>
+                  <input
+                    className={inputClass(false)}
+                    type="text"
+                    name="jobTitle"
+                    id="jobTitle"
+                    placeholder="Enter job title"
+                  />
                 </div>
               </div>
             </div>
 
             {/* Info Note */}
-            <div className="flex items-start gap-3 bg-gray-50 rounded-lg p-4 border border-gray-200">
-              <Info className="w-4 h-4 text-gray-500 flex-shrink-0 mt-0.5" />
-              <p className="text-xs text-gray-600 font-light leading-relaxed">
+            <div className="flex items-start gap-3 bg-primary-100 rounded-lg p-4 border border-primary-200">
+              <Info className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-primary-700 font-mono leading-relaxed">
                 By submitting this form, you agree to have your information stored securely. 
-                We'll use this to send you invitations for future company events, product launches, 
+                We&apos;ll use this to send you invitations for future company events, product launches, 
                 and exclusive opportunities. You can update your preferences at any time.
               </p>
             </div>
 
             {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-primary-200">
               <button 
-                className={`flex-1 bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-xl font-medium transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-blue-700/20 hover:shadow-blue-700/30 ${
-                  isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                }`} 
+                className={`flex-1 bg-primary text-white px-6 py-3 rounded-md font-semibold font-mono transition-all duration-200 hover:shadow-md hover:bg-primary-900 flex items-center justify-center gap-2 ${
+                  isSubmitting ? 'opacity-50 cursor-not-allowed disabled:bg-gray-300' : ''
+                }`}
                 type="submit"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                    <div className="spinner-mini"></div>
                     Saving...
                   </>
                 ) : (
@@ -336,7 +316,7 @@ const AddContact = () => {
                 )}
               </button>
               <button 
-                className="px-6 py-3 rounded-xl font-medium text-gray-600 hover:bg-gray-100 transition-colors" 
+                className="px-6 py-3 rounded-md font-semibold font-mono text-neutrals-900 hover:bg-primary-100/50 transition-colors border border-primary-200" 
                 type="button"
                 onClick={handleCancel}
               >
@@ -347,8 +327,8 @@ const AddContact = () => {
         </div>
 
         {/* Help Text */}
-        <p className="text-center text-xs text-gray-400 mt-6 font-light">
-          Need help? Contact our team at <a href="mailto:support@company.com" className="text-blue-700 hover:underline">support@company.com</a>
+        <p className="text-center text-xs text-neutrals-900 mt-6 font-mono">
+          Need help? Contact our team at <a href="mailto:support@company.com" className="text-primary hover:underline">support@company.com</a>
         </p>
       </main>
     </div>
